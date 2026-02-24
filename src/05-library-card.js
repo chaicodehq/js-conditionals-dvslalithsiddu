@@ -32,6 +32,31 @@
  * @param {number} overdueBooks - Number of overdue books
  * @returns {{ allowed: boolean, message: string }}
  */
+
 export function canBorrowBook(memberAge, hasValidCard, overdueBooks) {
-  // Your code here
+  
+  // 1. Only check for true "Garbage" data here
+  if( typeof memberAge !== "number" || typeof hasValidCard !== "boolean" || typeof overdueBooks !== "number"){ 
+    return { allowed : false , message : "Invalid input"}
+  }
+
+  // 2. Age Check (The test expects this specific message for age < 6)
+  if (memberAge < 6){
+    return { allowed : false , message : "Too young - must be at least 6 years old"}
+  }
+  
+  // 3. Card Check
+  else if (hasValidCard === false){
+    return { allowed : false , message : "Invalid library card - please renew at the front desk"}
+  }
+  
+  // 4. Overdue Check
+  else if (overdueBooks > 0){
+    return { allowed : false , message : `Please return your ${overdueBooks} overdue book(s) first`}
+  }
+  
+  // 5. Success!
+  else {
+    return { allowed : true , message : "You may borrow up to 3 books"}
+  }
 }
